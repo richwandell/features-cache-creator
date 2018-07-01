@@ -86,9 +86,7 @@ class Db {
                 for(Feature f2 : features) {
                     if(f1.x == f2.x && f1.y == f2.y) {
                         String feature1 = f1.apId + f2.apId;
-
                         Float value = Math.abs(f1.value - f2.value);
-                        String coord = f1.x + "_" + f1.y;
 
                         HashMap<String, Float> coordMap = null;
                         if(featuresCacheArray[f1.x][f1.y] != null) {

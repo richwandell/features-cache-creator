@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.locks.ReentrantLock;
 
 
 public class BilinearInterpolator extends Interpolator {
@@ -12,10 +13,10 @@ public class BilinearInterpolator extends Interpolator {
     private Thread[] consumers;
     private final String QUEUE_END = "END_OF_QUEUE";
 
+
     public BilinearInterpolator(HashMap<String, Float>[][] featuresCache, ArrayList<String> allFeatures,
                                 int maxX, int maxY, int minX, int minY) {
         super(featuresCache, allFeatures, maxX, maxY, minX, minY);
-
 
         queue = new LinkedBlockingDeque<String>();
 
@@ -139,7 +140,6 @@ public class BilinearInterpolator extends Interpolator {
             r = 1;
         }
         for(int row = r - 1; row >= 0; row--) {
-            String coord = Integer.toString(c) + "_" + Integer.toString(row);
             if(featuresCache[c][row] != null) {
                 HashMap<String, Float> coordMap = featuresCache[c][row];
                 if(coordMap.containsKey(feature)){
@@ -173,7 +173,6 @@ public class BilinearInterpolator extends Interpolator {
 
     private ReturnValue getLeft(String feature, int r, int c) {
         for(int col = c - 1; col >= 0; col--) {
-            String key = Integer.toString(col) + "_" + Integer.toString(r);
             if(featuresCache[col][r] != null) {
                 HashMap<String, Float> coordMap = featuresCache[col][r];
                 if(coordMap.containsKey(feature)) {
@@ -199,7 +198,6 @@ public class BilinearInterpolator extends Interpolator {
 
     private ReturnValue getRight(String feature, int r, int c) {
         for(int col = c + 1; col <= maxX; col++) {
-            String key = Integer.toString(col) + "_" + Integer.toString(r);
             if(featuresCache[col][r] != null) {
                 HashMap<String, Float> coordMap = featuresCache[col][r];
                 if(coordMap.containsKey(feature)) {
@@ -212,7 +210,6 @@ public class BilinearInterpolator extends Interpolator {
 
     private ReturnValue getLowerValues(String feature, int r, int c) {
         for(int row = r + 1; row < maxY; row++) {
-            String coord = Integer.toString(c) + "_" + Integer.toString(row);
             if(featuresCache[c][row] != null) {
                 HashMap<String, Float> coordMap = featuresCache[c][row];
                 if(coordMap.containsKey(feature)){
