@@ -54,7 +54,7 @@ class Db {
     public String createFeaturesCache(String fpId, boolean interpolate) {
 
         try {
-            final long startTime = System.currentTimeMillis();
+//            final long startTime = System.currentTimeMillis();
             int[] limitXy = getLimitXY(fpId);
             PreparedStatement pstmt = conn.prepareStatement(KALMAN_QUERY);
             pstmt.setString(1, fpId);
@@ -109,8 +109,8 @@ class Db {
             }
 
             featuresCache = arrayToFeaturesCache(featuresCacheArray);
-            long totalTime = System.currentTimeMillis() - startTime;
-            System.out.println(Long.toString(totalTime));
+//            long totalTime = System.currentTimeMillis() - startTime;
+//            System.out.println(Long.toString(totalTime));
 
             String serialize = JsonStream.serialize(featuresCache);
             return serialize;
