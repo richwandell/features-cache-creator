@@ -46,7 +46,6 @@ public class Main {
             Db db = new Db(dbFileName);
             String cache = db.createFeaturesCache(fpId, interpolate);
 
-
             File newTextFile = new File(outputFileName);
             FileWriter fw = null;
             try {
